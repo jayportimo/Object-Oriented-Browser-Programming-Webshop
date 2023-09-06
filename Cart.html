@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="Home.css" />
+    <link rel="stylesheet" href="Cart.css" />
+    <title>Kitani Flowers</title>
+  </head>
+
+  <body>
+    <header>
+      <h1>Kitani Flowers</h1>
+    </header>
+
+    <nav>
+      <ul>
+        <li><a href="Home.html">Home</a></li>
+        <li><a href="Products.html">Products</a></li>
+        <li><a href="Cart.html">Cart</a></li>
+      </ul>
+    </nav>
+
+    <div class="cartItems"></div>
+    <button id="updateCartButton">Update Cart</button>
+    <div class="cartTotal">Total amount:</div>
+
+    <script src="flowerData.js"></script>
+    <script src="cart.js"></script>
+
+    <script>
+      const cartItemsContainer = document.querySelector(".cartItems");
+
+      function updateCartDisplay() {
+        cartItemsContainer.innerHTML = "";
+
+        // Message triggered if cart is empty
+        if (cart.length === 0) {
+          const emptyMessage = document.createElement("p");
+          emptyMessage.textContent = "Your cart is empty.";
+          cartItemsContainer.appendChild(emptyMessage);
+        } else {
+          // Cart shows products added there
+          cart.forEach((product, index) => {
+            const cartItem = document.createElement("div");
+            cartItem.classList.add("cartItem");
+
+            // The name of the product
+            const productName = document.createElement("span");
+            productName.textContent = product.name;
+
+            // The price of the product
+            const productPrice = document.createElement("span");
+            productPrice.textContent = "Price: " + product.price + "$";
+
+            // Add one more of specific product inside cart
+            const addButton = document.createElement("button");
+            addButton.textContent = "+";
+            addButton.addEventListener("click", () => {
+              cart.push({ ...product });
+              updateCartDisplay();
+              alert("Click 'Update Cart'-button to update local storage!");
+            });
+
+            // Remove one specific product inside cart
+            const removeButton = document.createElement("button");
+            removeButton.textContent = "-";
+            removeButton.addEventListener("click", () => {
+              if (
+                cart.filter((item) => item.name === product.name).length > 1
+              ) {
+                const indexToRemove = cart.findIndex(
+                  (item) => item.name === product.name
+                );
+                cart.splice(indexToRemove, 1);
+              } else {
+                const indexToRemove = cart.findIndex(
+                  (item) => item.name === product.name
+                );
+                cart.splice(indexToRemove, 1);
+              }
+
+              // Make changes made to cart visible right away
+              updateCartDisplay();
+
+              // Alert customer to update their local storage to match current, accurate cart
+              alert("Click 'Update Cart'-button to update local storage!");
+            });
+
+            cartItem.appendChild(productName);
+            cartItem.appendChild(productPrice);
+            cartItem.appendChild(addButton);
+            cartItem.appendChild(removeButton);
+
+            cartItemsContainer.appendChild(cartItem);
+          });
+        }
+
+        // Visible total price of carts contents calculated
+        const totalDiv = document.querySelector(".cartTotal");
+
+        totalDiv.textContent =
+          "Total price: $" + calculateTotalPrice().toFixed(2);
+      }
+      function calculateTotalPrice() {
+        return cart.reduce((total, product) => total + product.price, 0);
+      }
+      updateCartDisplay();
+
+      const updateCartButton = document.getElementById("updateCartButton");
+
+      updateCartButton.addEventListener("click", function () {
+        localStorage.setItem("cart", JSON.stringify(cart));
+
+        alert("Local storage has been updated!");
+      });
+    </script>
+    <footer>
+      If you subscribe to our newsletter, we will send you a registration form
+      to our website! Includes a surprise discount for every tenth subscriber!
+    </footer>
+  </body>
+</html>

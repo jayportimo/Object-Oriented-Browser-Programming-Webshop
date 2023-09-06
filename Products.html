@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="Home.css" />
+    <title>Kitani Flowers</title>
+  </head>
+
+  <body>
+    <header>
+      <h1>Kitani Flowers</h1>
+    </header>
+
+    <nav>
+      <ul>
+        <li><a href="Home.html">Home</a></li>
+        <li><a href="Cart.html">Cart</a></li>
+      </ul>
+    </nav>
+
+    <div class="product-list"></div>
+
+    <script src="flowerData.js"></script>
+
+    <script>
+      const productList = document.querySelector(".product-list");
+
+      // Display all products from the array
+      flowerData.forEach((flower) => {
+        const product = document.createElement("div");
+        product.classList.add("product-card");
+
+        // An image of product
+        const image = document.createElement("img");
+        image.src = flower.image;
+
+        // The info of product
+        const productInfo = document.createElement("div");
+        productInfo.classList.add("product-info");
+
+        // Make the name of product a link to take to the product details page
+        const modelHeading = document.createElement("h3");
+        const modelLink = document.createElement("a");
+        modelLink.href = `productDetails.html?id=${flower.id}`;
+        modelLink.textContent = flower.name;
+        modelHeading.appendChild(modelLink);
+
+        // The highlight info of product
+        const productInfoHeading = document.createElement("h4");
+        productInfoHeading.textContent = flower.highlights[0];
+
+        // The price of product
+        const priceHeading = document.createElement("h4");
+        priceHeading.textContent = flower.price + "$";
+
+        product.append(image);
+        product.append(productInfo);
+        productInfo.append(modelHeading);
+        productInfo.append(productInfoHeading);
+        productInfo.append(priceHeading);
+
+        productList.append(product);
+      });
+    </script>
+
+    <footer>
+      If you subscribe to our newsletter, we will send you a registration form
+      to our website! Includes a surprise discount for every tenth subscriber!
+    </footer>
+  </body>
+</html>

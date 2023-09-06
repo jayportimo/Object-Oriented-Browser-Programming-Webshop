@@ -1,0 +1,19 @@
+.cartItems {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid white;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.cartTotal {
+  text-align: center;
+  font-size: 18px;
+}
+
+.updateCartButton {
+  display: flex;
+  align-self: center;
+}

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="Home.css" />
+    <link rel="stylesheet" href="ProductDetails.css" />
+    <title>Kitani Flowers</title>
+  </head>
+
+  <body>
+    <header>
+      <h1>Kitani Flowers</h1>
+    </header>
+
+    <nav>
+      <ul>
+        <li><a href="Home.html">Home</a></li>
+        <li><a href="Products.html">Products</a></li>
+        <li><a href="Cart.html">Cart</a></li>
+      </ul>
+    </nav>
+
+    <div class="productDetails"></div>
+
+    <script src="flowerData.js"></script>
+    <script src="cart.js"></script>
+
+    <script>
+      // Get product id from the web page URL
+      const urlParams = new URLSearchParams(window.location.search);
+      const productId = urlParams.get("id");
+
+      // Get the right product from array based on the product id
+      const product = flowerData.find((flower) => flower.id === productId);
+
+      if (product) {
+        // Show product details
+        const productDetails = document.querySelector(".productDetails");
+
+        const productInfoContainer = document.createElement("div");
+        productInfoContainer.classList.add("productInfoContainer");
+
+        // An image of product
+        const productImage = document.createElement("img");
+        productImage.src = product.image;
+
+        // The name of product
+        const productName = document.createElement("name");
+        productName.textContent = product.name;
+
+        // The price of product
+        const productPrice = document.createElement("price");
+        productPrice.textContent = "Price: " + product.price + "$";
+
+        // The info of product
+        const productInfoText = document.createElement("info");
+        productInfoText.classList.add("productInfoText");
+        productInfoText.textContent = product.infoText;
+
+        // Button to add the product to cart
+        const addToCartButton = document.createElement("button");
+        addToCartButton.textContent = "Add to Cart";
+        addToCartButton.addEventListener("click", function () {
+          // Alert to let customer know product was added to cart
+          alert("Product added to cart!");
+          addToCart(product);
+        });
+
+        productInfoContainer.appendChild(productName);
+        productInfoContainer.appendChild(productPrice);
+        productInfoContainer.appendChild(productInfoText);
+        productInfoContainer.appendChild(addToCartButton);
+
+        productDetails.appendChild(productImage);
+        productDetails.appendChild(productInfoContainer);
+      }
+    </script>
+
+    <footer>
+      If you subscribe to our newsletter, we will send you a registration form
+      to our website! Includes a surprise discount for every tenth subscriber!
+    </footer>
+  </body>
+</html>
